@@ -31,5 +31,6 @@ plugins:
     Database:
         driver: 'SQLite'
         database: './test.sdb'
-    SimpleCRUD:
-        use_old_url_scheme: 0
+# to test the backward compat for url gen
+#    SimpleCRUD:
+#        use_old_url_scheme: 0

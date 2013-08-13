@@ -18,17 +18,45 @@ get '/hello' => sub {
 
 
 simple_crud (
-    db_table => 'widgets',
-    prefix => '/widgets',
+    db_table => 'widget',
+    prefix => '/widget',
     foreign_keys => {
         buddy_widget_id => {
-            table => 'widgets',
+            table => 'widget',
             key_column => 'id',
             label_column => 'name',
         },
     },
 );
 
+simple_crud (
+    db_table => 'person',
+    prefix => '/person',
+    foreign_keys => {
+       favorite_widget_id => {
+            table => 'widget',
+            key_column => 'id',
+            label_column => 'name',
+        },
+    },
+);
+
+simple_crud (
+    db_table => 'widget_inventor',
+    prefix => '/inventor',
+    foreign_keys => {
+        widget_id => {
+            table => 'widget',
+            key_column => 'id',
+            label_column => 'name',
+        },
+        inventor_id => {
+            table => 'person',
+            key_column => 'id',
+            label_column => 'name',
+        },
+    },
+);
 #prefix '/foo';
 
 simple_crud (
@@ -38,10 +66,10 @@ simple_crud (
 
 
 sub init_db {
-    database->do('CREATE TABLE IF NOT EXISTS widgets  (id integer primary key autoincrement, name varchar(63), description varchar(255), buddy_widget_id int after id)');
+    database->do('CREATE TABLE IF NOT EXISTS widget  (id integer primary key autoincrement, name varchar(63), description varchar(255), buddy_widget_id int)');
     database->do('CREATE TABLE IF NOT EXISTS simple_thing  (id integer primary key autoincrement, name varchar(63), description varchar(255))');
-    print STDERR Dumper( \@INC ); use Data::Dumper;
-    print STDERR Dumper( \%INC ); use Data::Dumper;
+    database->do('CREATE TABLE IF NOT EXISTS person  (id integer primary key autoincrement, name varchar(63), favorite_widget_id int)');
+    database->do('CREATE TABLE IF NOT EXISTS widget_inventor  (id integer primary key autoincrement, inventor_id int, widget_id int)');
 }
 
 

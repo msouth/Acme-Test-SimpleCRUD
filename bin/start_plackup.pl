@@ -21,7 +21,7 @@ if (-e $pid_file) {
 
 }
 
-my $command = "plackup --pid $pid_file --server Starman --env development --workers 1 --daemonize bin/app.psgi";
+my $command = "plackup --pid $pid_file --server Starman --env development --port 5555 --workers 1 --daemonize bin/app.psgi";
 #print "\n\nFAILED\n\n  CHeck this output for why:". qx{ nohup $command };
 print "I'm about to qx{ $command }...which should daemonize and give you your prompt back if everything goes well.  I'll print the output of the qx run as well\n";
 print qx{$command};
